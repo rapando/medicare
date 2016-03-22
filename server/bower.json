@@ -1,0 +1,23 @@
+{
+  "name": "medicare server side",
+  "homepage": "https://github.com/rapando/medicare",
+  "authors": [
+    "samsonrapando@gmail.com and abedxh@gmail.com"
+  ],
+  "description": "This is ther server side code for the medicare app, for Unify Group",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.2",
+    "Materialize": "materialize#^0.97.5",
+    "angular": "angularjs#^1.5.2"
+  }
+}
