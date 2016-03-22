@@ -1,0 +1,16 @@
+@import "https://fonts.googleapis.com/css?family=Poiret+One";
+@font-face {  font-family: 'Material Icons';  font-style: normal;  font-weight: 400;  src: local('Material Icons'), local('MaterialIcons-Regular'), url(2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');}
+
+.material-icons {  font-family: 'Material Icons';  font-weight: normal;  font-style: normal;  font-size: 24px;  line-height: 1;  letter-spacing: normal;  text-transform: none;  display: inline-block;  white-space: nowrap;  word-wrap: normal;  direction: ltr;  -webkit-font-feature-settings: 'liga';  -webkit-font-smoothing: antialiased;}
+/* ---------------------------------------------------- */
+
+* {max-width:  100%; }
+nav {position: fixed; z-index: 10; min-width: 100%; top: 0; margin-top: 0; max-height: 70px}
+.main-body {margin-top: 70px}
+.brand-logo {font-family : 'Poiret One', 'Ubuntu'; font-weight: bold;  color: black !important }
+.card-title {font-family: 'Poiret One', 'Ubuntu',; font-weight: bold !important}
+label {font-size : 1.4em !important; padding: 0 5% 0 5% !important;}
+input[type="text"], input[type="password"] , input[type="email"]{font-size: 1.3em; padding: 0 5% 0 5% !important; }
+#loginForm {padding-bottom: 2%;}
+.forgot {font-size: 1.3em}
+h3 {font-family: 'Poiret One', 'Ubuntu';}
