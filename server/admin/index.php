@@ -45,6 +45,12 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 			<a href="#add-hospital"><h4>Add Hospital</h4></a>
 			<a href="#add-pharmacy"><h4>Add Pharmacy</h4></a>
 		</div>
+		<div class="divider"></div>
+		<div class="section">
+			<a href="#viewDocs"><h4>View Doctors</h4></a>
+			<a href="#viewPats"><h4>View Patients</h4></a>
+		</div>
+
 	</div>
 
 
