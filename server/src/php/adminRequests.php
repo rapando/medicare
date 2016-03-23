@@ -5,8 +5,15 @@ if (isset($data->req)) {
 	include "config.php";
 
 	switch($data->req) {
+
 		case 'addHospital':
 			$qry = mysqli_query(Config::dbConnect(), "INSERT INTO hospitals (id, name, county, location) VALUES ('', '$data->hospitalName', '$data->county', '$data->hospitalLocation');");
+			if($qry) print json_encode(1);
+			else print json_encode(0);
+		break;
+
+		case 'addPharmacy':
+			$qry = mysqli_query(Config::dbConnect(), "INSERT INTO pharmacies (id, name, phoneNumber, location, county ) VALUES ('', '$data->name', '$data->phone', '$data->location', '$data->county');");
 			if($qry) print json_encode(1);
 			else print json_encode(0);
 		break;

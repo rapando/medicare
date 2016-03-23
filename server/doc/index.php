@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['adminId'])) {header("location:login.php");
+if (empty($_SESSION['docid'])) {header("location:../");
 } else {
 	include "../src/php/config.php";
 
@@ -39,11 +39,10 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 	</div>
 </nav>
 
-<div class="main-body row" >
+<div class="main-body row">
 	<div class="col m3 l3 grey lighten-3">
 		<div class="section">
 			<a href="#add-hospital"><h4>Add Hospital</h4></a>
-			<a href="#add-pharmacy"><h4>Add Pharmacy</h4></a>
 		</div>
 	</div>
 
@@ -69,9 +68,9 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 					<li style="opacity: 0">
 						<div class="input-field col m10 l10 offset-m1 offset-l1">
 							<select name="county" id="county" required>
-								<?php
-								print $counties;
-								?>
+<?php
+print$counties;
+?>
 							</select>
 						</div>
 					</li>
@@ -87,59 +86,8 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 			</ul>
 		</form>
 		</div>
-
-
-		<div class="divider"></div>
-
-
-		<div class="container" id="add-pharmacy">
-			<form>
-			<ul id="add-pharmacy-form">
-				<li style="opacity: 0"><h3>Add Pharmacy</h3></li>
-				<div class="row">
-					<li style="opacity:0">
-						<div class="input-field col m10 l10 offset-m1 offset-l1">
-							<input type="text" name="pharmacyName" id="pharmacyName" placeholder="Pharmacy Name" required  autofocus/>
-						</div>
-					</li>
-
-					<li style="opacity:0">
-						<div class="input-field col m10 l10 offset-m1 offset-l1">
-							<input type="text" name="pharmacyLocation" id="pharmacyLocation" placeholder="Location"  required />
-						</div>
-					</li>
-
-					<li style="opacity: 0">
-						<div class=" col m5 l5 offset-m1 offset-l1">
-							<select name="pharmacyCounty" id="pharmacyCounty" required>
-								<?php
-								print $counties;
-								?>
-							</select>
-						</div>
-					</li>
-
-					<li style="opacity : 0">
-						<div class="input field col s12 m5 l5 offset-m1 offset-l1">
-							<input type="text" name="pharmacyPhone" id="pharmacyPhone" placeholder="Phone Number" required maxlength="10"/>
-						</div>
-					</li>
-
-					<li style="opacity:0">
-					<button type="submit" id="addPharmacyBtn" class="btn waves-effect waves-light right offset-m1 offset-l1">Add</button>
-					</li>
-					<br />.
-					<div class="progress progress2">
-						<div class="indeterminate"></div>
-					</div>
-				</div>
-			</ul>
-		</form>
-		</div>
 	</div>
 </div>
-
-<a href="#top" class="btn btn-large btn-floating red right floating-top-btn"><i class="material-icons">present_to_all</i></button>
 <script src="../src/js/admin.js"></script>
 </body>
 </html>

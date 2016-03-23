@@ -1,3 +1,28 @@
+
+<?php
+//fetch the list of diseases
+include "src/php/config.php";
+
+$qry = mysqli_query(Config::dbConnect(), "SELECT * FROM diseases ORDER BY name ASC;");
+$diseases = "<option value='' selected>-disease-</option>";
+while($row = mysqli_fetch_array($qry)) {
+	$id = $row['id'];
+	$name = $row['name'];
+	$diseases = $diseases."<option value='$id'>$name</option>";
+}
+
+
+
+//fetch the list of hospitals
+$qry = mysqli_query(Config::dbConnect(), "SELECT * FROM hospitals ORDER BY name ASC;");
+$hospitals = "<option value='' selected>-hospital-</option>";
+while($row = mysqli_fetch_array($qry)) {
+	$id = $row['id'];
+	$name = $row['name'];
+	$hospitals = $hospitals. "<option value='$id'>$name</option>";
+}
+ ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +37,7 @@
 
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/Materialize/dist/js/materialize.min.js"></script>
+
 
 </head>
 <body>
@@ -75,8 +101,11 @@
 		<div class="indeterminate"></div>
 	</div>
 
-	<li style="opacity:0" class="center-align forgot teal-text"><a href="#forgot">I forgot my Password</a></li>
-	<li style="opacity:0" class="center-align forgot teal-text"><a href="admin">Admin</a></li>
+
+
+	<li style="opacity:0" class="center-align forgot "><a href="#forgot">I forgot my Password</a></li>
+	<li style="opacity:0" class="center-align register "><a href="#register">I want an Account</a></li>
+	<li style="opacity:0" class="center-align forgot "><a href="admin">I am the Admin</a></li>
 
 </ul>
 </form>
@@ -102,6 +131,79 @@
 		<div class="indeterminate"></div>
 	</div>
 	</ul>
+</div>
+
+<br /><div class="divider"></div><br />
+
+<div id="register">
+	<form name="docRegisterForm" method="POST" action="src/php/requests.php" enctype="multipart/form-data">
+	<ul id="registerForm">
+		<li style="opacity:0"><h3 class="center-align">Register</h3></li>
+		<li style="opacity:0">
+			<div class="input-field col s12 m5 l5 offset-m1 offset-l1">
+				<input type="text" name="docFullName" required maxlength="30" required placeholder="Full Name"/>
+			</div>
+		</li>
+
+		<li style="opacity:0">
+			<div class="input-field col s12 m5 l5 offset-m1 offset-l1">
+				<input type="text" name="docUname" required maxlength="30" required placeholder="Username (Emp No)"/>
+			</div>
+		</li>
+
+		<li style="opacity:0">
+			<div class="input-field col s12 m5 l5 offset-m1 offset-l1">
+				<input type="text" name="docPhone" required maxlength="10" required placeholder="Phone Number"/>
+			</div>
+		</li>
+
+		<li style="opacity:0">
+			<div class="input-field col s12 m5 l5 offset-m1 offset-l1">
+				<input type="password" name="docPass" required maxlength="30" required placeholder="Password"/>
+			</div>
+		</li>
+
+		<li style="opacity:0">
+			<div class="input-field col s12 m10 l10 offset-m1 offset-l1">
+				<textarea class = "materialize-textarea" name="aboutDoc" required maxlength="100" placeholder="Tell us about yourself"></textarea>
+			</div>
+		</li>
+
+		<li style="opacity:0">
+			<div class="input-field file-field col s12 m10 l10 offset-m1 offset-l1">
+				<div class="btn">
+					<span><i class="material-icons">perm_identity</i></span>
+					<input type="file" required name="profPic" accept="image/*" />
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate " type="text" />
+				</div>
+			</div>
+		</li>
+
+
+		<li style="opacity:0">
+			<div class=" col s12 m5 l5 offset-m1 offset-l1">
+				<select name="docHospital">
+					<?php print $hospitals; ?>
+				</select>
+			</div>
+		</li>
+
+		<li style="opacity:0">
+			<div class=" col s12 m5 l5 offset-m1 offset-l1">
+				<select name="docSpecialization">
+					<?php print $diseases; ?>
+				</select>
+			</div>
+		</li>
+
+		<li style="opacity : 0">
+			<button type="submit" name="req" value="addDoc" class="btn right waves-effect waves-light">Add</button>
+		</li>
+
+	</ul>
+</form>
 </div>
 
 </div>

@@ -1,10 +1,16 @@
 jQuery(document).ready(function($) {
 	$('select').material_select();
-	$('.progress1').hide();
+	$('.progress1, .progress2').hide();
+
 	$('a[href="#add-hospital"]').on('click', function(e) {
-		e.preventDefault();
+		// e.preventDefault();
 		Materialize.showStaggeredList('#add-hospital-form');
 	});
+
+	$('a[href="#add-pharmacy"]').on('click', function(e) {
+		// e.preventDefault();
+		Materialize.showStaggeredList('#add-pharmacy-form');
+	})
 
 	// add a hospital
 	$("#addHospitalBtn").on('click', function(e) {
@@ -39,5 +45,44 @@ jQuery(document).ready(function($) {
 			}
 		});
 
-	})
+	});
+
+	// add pharmacy
+
+	$("#addPharmacyBtn").on('click', function(e) {
+		$('.progress2').show();
+		$("#addPharmacyBtn").addClass('disabled');
+		e.preventDefault();
+
+		var pharmacyName = $("#pharmacyName").val();
+		var pharmacyLocation = $("#pharmacyLocation").val();
+		var pharmacyCounty = $("#pharmacyCounty").val();
+		var pharmacyPhone = $("#pharmacyPhone").val();
+		var data = JSON.stringify({req : 'addPharmacy', name : pharmacyName, phone : pharmacyPhone, location : pharmacyLocation, county : pharmacyCounty});
+
+
+		$.ajax({
+			dataType : 'json',
+			data  : data,
+			type : 'post',
+			timeout : 10000,
+			url : '../src/php/adminRequests.php',
+			success : function(res) {
+				if(res == 0) Materialize.toast("Error adding the Pharmacy", 2000);
+				else Materialize.toast("Pharmacy Added successfully", 2000);
+				$("#pharmacyLocation").val('');
+				$("#pharmacyName").val('');
+				$("#pharmacyPhone").val('');
+				$("#addPharmacyBtn").removeClass('disabled');
+				$('.progress2').hide();
+			},
+			error : function() {
+				Materialize.toast('Network error', 2000);
+				$("#addPharmacyBtn").removeClass('disabled');
+				$('.progress2').hide();
+			}
+		});
+	});
+
+
 });
