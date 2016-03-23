@@ -76,6 +76,7 @@
 	</div>
 
 	<li style="opacity:0" class="center-align forgot teal-text"><a href="#forgot">I forgot my Password</a></li>
+	<li style="opacity:0" class="center-align forgot teal-text"><a href="admin">Admin</a></li>
 
 </ul>
 </form>

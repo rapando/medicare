@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
 	setTimeout(function() {
 		Materialize.showStaggeredList('#loginForm');
 		$('.loginBtn').addClass('disabled');
-	}, 1500);
+	}, 500);
 
 	$('#pass').on('keyup', function() {
 		$('.loginBtn').removeClass('disabled');

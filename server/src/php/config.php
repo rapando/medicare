@@ -4,7 +4,7 @@
  */
 class Config {
 	public static function dbConnect() {
-		return mysqli_connect("localhost", "root", "therealsam", "rapandoc_misn");
+		return mysqli_connect("localhost", "root", "therealsam", "rapandoc_medicare");
 	}
 
 	public static function passHasher($pass, $salt) {
