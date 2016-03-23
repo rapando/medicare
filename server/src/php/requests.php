@@ -21,7 +21,7 @@ if(isset($_POST['req'])) {
       patientLogin();
     break;
   }
-}
+} else print "no request";
 
 function docLogin() {
   $username = strtolower(trim($_POST['uname']));
@@ -85,7 +85,7 @@ function patientLogin() {
   $uname = trim(strtolower($_POST['uname']));
   $pass = $_POST['pass'];
   $qryUname = mysqli_query(Config::dbConnect(), "SELECT * FROM patients WHERE username = '$uname';");
-  $no = mysqli_num-rows($qryUname);
+  $no = mysqli_num_rows($qryUname);
   if($no > 0) {
     $qryPass = mysqli_query(Config::dbConnect(), "SELECT pass, salt FROM patients WHERE username = '$uname';");
     $stored     = mysqli_fetch_array($qryPass);

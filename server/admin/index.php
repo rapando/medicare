@@ -142,6 +142,17 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 			</ul>
 		</form>
 		</div>
+
+		<div class="divider"></div>
+
+		<div class="container" id="viewDocs">
+			<div class="progress progress3">
+				<div class="indeterminate"></div>
+			</div>
+			<ul id="doc-list">
+				<li style="opacity:0"><h3>Doctors</h3></li>
+			</ul>
+		</div>
 	</div>
 </div>
 

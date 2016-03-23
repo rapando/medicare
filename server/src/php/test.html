@@ -1,0 +1,32 @@
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<button id="test">btn</button>
+<script>
+$("#test").on('click', function() {
+  var data = {req : 'addPatient', uname : 'abednego', pass : 'pass', email : 'abed@rapando.co.ke'};
+  $.ajax({
+    dataType : 'text',
+    data : data,
+    type : 'post',
+    url :'requests.php',
+    success : function(res) {
+      alert(res);
+    },
+    error : function() {
+      alert("error");
+    }
+  });
+
+  // var data = {req : 'patientLogin', uname : 'samson', pass : 'pass'};
+  // $.ajax({
+  //   dataType : 'text',
+  //   data : data,
+  //   type : 'post',
+  //   url : 'requests.php',
+  //   success :function(res) {
+  //     alert(res);
+  //   }, error : function() {
+  //     alert("error");
+  //   }
+  // })
+})
+</script>

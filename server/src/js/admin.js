@@ -1,14 +1,20 @@
 jQuery(document).ready(function($) {
 	$('select').material_select();
-	$('.progress1, .progress2').hide();
+	$('.progress1, .progress2, .progress3').hide();
 
 	$('a[href="#add-hospital"]').on('click', function(e) {
-		// e.preventDefault();
+		e.preventDefault();
+		$('html, body').animate({
+			 scrollTop: $("#add-hospital").offset().top
+	 }, 500);
 		Materialize.showStaggeredList('#add-hospital-form');
 	});
 
 	$('a[href="#add-pharmacy"]').on('click', function(e) {
-		// e.preventDefault();
+		e.preventDefault();
+		$('html, body').animate({
+			 scrollTop: $("#add-pharmacy").offset().top
+	 }, 500);
 		Materialize.showStaggeredList('#add-pharmacy-form');
 	})
 
@@ -84,5 +90,25 @@ jQuery(document).ready(function($) {
 		});
 	});
 
+	$("a[href='#viewDocs']").click(function(e) {
+		e.preventDefault();
+		$('html, body').animate({
+			 scrollTop: $("#viewDocs").offset().top
+	 	}, 500);
+		Materialize.showStaggeredList('#doc-list');
+		$('.progress3').show();
+		$.ajax({
+			dataType : 'json',
+			type : 'post',
+			data : JSON.stringify({req : 'fetchDocs'}),
+			url : '../src/php/adminRequests.php',
+			success : function(res) {
+
+			}, error : function() {
+				alert("error");
+			}
+		})
+
+	})
 
 });
