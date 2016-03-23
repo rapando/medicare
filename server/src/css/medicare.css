@@ -11,10 +11,11 @@ nav {position: fixed; z-index: 10; min-width: 100%; top: 0; margin-top: 0; max-h
 .card-title {font-family: 'Poiret One', 'Ubuntu',; font-weight: bold !important}
 label {font-size : 1.4em !important; padding: 0 5% 0 5% !important;}
 input[type="text"], input[type="password"] , input[type="email"]{font-size: 1.4em; padding: 0 5% 0 5% !important;  font-family: 'Hind'}
-textarea {font-size: 1.6em !important; padding: 0 5% 0 5% !important;  font-family: 'Hind'}
+textarea {font-size: 1.4em !important; padding: 0 5% 0 5% !important;  font-family: 'Hind'}
 #loginForm {padding-bottom: 2%;, }
 .forgot , .register{font-size: 1.3em}
 
 h3, h4 {font-family: 'Poiret One', 'Ubuntu'; text-align: center}
 #addHospitalBtn {margin-bottom: 2%!important}
 .floating-top-btn {position: fixed; margin-bottom: 20px; margin-right: 10px; z-index: 5; bottom: 0; right: 0;}
+.floating-logout-btn {position: fixed; margin-bottom: 20px; margin-left: 10px; z-index: 5; bottom: 0; left: 0;}

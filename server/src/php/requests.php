@@ -45,6 +45,7 @@ if(isset($_POST['req'])) {
         $qry = mysqli_query(Config::dbConnect(), "INSERT INTO doctors (id, name, specialization, hospital, username, pass, salt, otherDetails, image) VALUES ('', '$fullName', '$specialization', '$hospital', '$uname', '$pass', '$salt', '$about', '$profpicName');");
         if($qry) {
           print  "Congratulations. You can now login";
+          header("refresh:2; url=../../");
         } else {
           print "Oops, There was a proble creating your accout. Contact the Admin for more details";
         }
@@ -52,7 +53,33 @@ if(isset($_POST['req'])) {
     break;
 
     case 'addPatient':
-      
+      $name = trim(strtolower($_POST['email']));
+      $uname = trim(strtolower($_POST['uname']));
+      $salt = Config::saltGenerator();
+      $pass = Config::passHasher($_POST['pass'], $salt);
+
+      $qry = mysqli_query(Config::dbConnect(), "INSERT INTO patients (id, email, username, diseases, pass, salt) VALUES ('', '$email', '$uname', '0', '$pass', '$salt');");
+      if($qry) print "1";
+      else print "0";
+    break;
+
+    case 'patientLogin':
+      $uname = trim(strtolower($_POST['uname']));
+      $pass = $_POST['pass'];
+      $qryUname = mysqli_query(Config::dbConnect(), "SELECT * FROM patients WHERE username = '$uname';");
+      $no = mysqli_num-rows($qryUname);
+      if($no > 0) {
+        $qryPass = mysqli_query(Config::dbConnect(), "SELECT pass, salt FROM patients WHERE username = '$uname';");
+        $stored     = mysqli_fetch_array($qryPass);
+        $storedPass = $stored['pass'];
+        $storedSalt = $stored['salt'];
+        if (Config::passHasher($pass, $storedSalt) == $storedPass) {
+
+          print "1";
+        } else {
+          print "0";
+        }
+      } else print "Wromg credentials";
     break;
   }
 }

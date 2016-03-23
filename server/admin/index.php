@@ -139,7 +139,10 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 	</div>
 </div>
 
-<a href="#top" class="btn btn-large btn-floating red right floating-top-btn"><i class="material-icons">present_to_all</i></button>
+<a href="../src/php/logout.php" class="btn btn-large btn-floating red right floating-logout-btn" title="logout"><i class="material-icons">settings_power</i></a>
+
+
+<a href="#top" class="btn btn-large btn-floating red right floating-top-btn"><i class="material-icons">present_to_all</i></a>
 <script src="../src/js/admin.js"></script>
 </body>
 </html>
