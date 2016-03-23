@@ -53,7 +53,7 @@ if(isset($_POST['req'])) {
     break;
 
     case 'addPatient':
-      $name = trim(strtolower($_POST['email']));
+      $email = trim(strtolower($_POST['email']));
       $uname = trim(strtolower($_POST['uname']));
       $salt = Config::saltGenerator();
       $pass = Config::passHasher($_POST['pass'], $salt);
