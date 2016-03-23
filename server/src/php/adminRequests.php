@@ -17,6 +17,15 @@ if (isset($data->req)) {
 			if($qry) print json_encode(1);
 			else print json_encode(0);
 		break;
+
+		case 'fetchDocs':
+			$qry = mysqli_query(Config::dbConnect(), "SELECT * FROM doctors ORDER BY name ASC;");
+			$data = array();
+			while($row = mysqli_fetch_array($qry)) {
+				$data[] = $row;
+			}
+			print json_encode($data);
+		break;
 	}
 } else {
 	print json_encode("no");

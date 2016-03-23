@@ -20,6 +20,44 @@ if(isset($_POST['req'])) {
     case 'patientLogin':
       patientLogin();
     break;
+
+    case 'bookAppointment':
+      bookAppointment();
+    break;
+
+    case 'viewDoctors':
+    viewDoctors();
+    break;
+
+    case 'viewDoctor':
+    viewDoctors();
+    break;
+
+    case 'viewDocByDisease':
+      viewDocByDisease($_POST['disease']);
+    break;
+
+    case 'viewHospitals':
+      viewHospitals();
+    break;
+
+    case 'viewHospital':
+      viewHospital();
+    break;
+
+    case 'viewPharmacies':
+      viewPharmacies();
+    break;
+
+    case 'viewPharmacy':
+      viewPharmacy();
+    break;
+
+    case 'pharmMedics':
+      pharmMedics($_POST['pharmacyId']);
+    break;
+
+
   }
 } else print "no request";
 
@@ -98,6 +136,90 @@ function patientLogin() {
       print "0";
     }
   } else print "Wrong credentials";
+}
+
+function bookAppointment() {
+  $user = $_POST['user'];
+  $doc = $_POST['doc'];
+  $moment = $_POST['moment'];
+  $status = "pending";
+  $qry = mysqli_query(Config::dbConnect(), "INSERT INTO appointments (id, doctor, patient, moment, status) VALUES ('', '$doc', '$user', '$moment', '$status');");
+  if($qry) print "1";
+  else print "0";
+}
+
+function viewDoctors() {
+  $qry = mysqli_query(Config::dbConnect(), "SELECT doctors.id, doctors.name as doctorName, doctors.otherDetails, diseases.name as disease, hospitals.name as hospital FROM doctors INNER JOIN hospitals ON hospitals.id = doctors.hospital INNER JOIN diseases ON doctors.specialization = diseases.id  ORDER BY doctors.name ASC;");
+  $data = array();
+  while($row = mysqli_fetch_array($qry)) {
+    $data[] = $row;
+  }
+  $data = array("disease" => $data);
+  print json_encode($data);
+}
+
+function viewDoctor() {
+  $docId = $_POST['docId'];
+
+  $qry = mysqli_query(Config::dbConnect(), "SELECT doctors.id, doctors.name as doctorName, doctors.otherDetails, diseases.name as disease, hospitals.name as hospital FROM doctors INNER JOIN hospitals ON hospitals.id = doctors.hospital INNER JOIN diseases ON doctors.specialization = diseases.id WHERE doctors.id = '$docId';");
+  $data = array("doctor" => mysqli_fetch_array($qry));
+  print json_encode($data);
+}
+
+function viewDocByDisease($disease) {
+  $qry = mysqli_query(Config::dbConnect(), "SELECT doctors.id, doctors.name as doctorName, doctors.otherDetails, diseases.name as disease, hospitals.name as hospital FROM doctors INNER JOIN hospitals ON hospitals.id = doctors.hospital INNER JOIN diseases ON doctors.specialization = diseases.id WHERE diseases.name = '$disease';");
+  $data = array();
+  while($row = mysqli_fetch_array($qry)) {
+    $data[] = $row;
+  }
+  $data = array("disease" => $data);
+  print json_encode($data);
+}
+
+
+function viewHospitals() {
+  $qry = mysqli_query(Config::dbConnect(), "SELECT hospitals.id, hospitals.name, hospitals.location, counties.name FROM hospitals LEFT JOIN counties ON counties.id = hospitals.county ORDER BY counties.name ASC;");
+  $data = array();
+  while($row = mysqli_fetch_array($qry)) {
+    $data[] = $row;
+  }
+  $data = array("hospitals" => $data);
+  print json_encode($data);
+}
+
+function viewHospital() {
+  $hospitalId = $_POST['hospitalId'];
+
+  $qry = mysqli_query(Config::dbConnect(), "SELECT hospitals.id, hospitals.name, hospitals.location, counties.name FROM hospitals LEFT JOIN counties ON counties.id = hospitals.county WHERE hospitals.id = '$hospitalId';");
+  $data = array("hospital" => mysqli_fetch_array($qry));
+  print json_encode($data);
+}
+
+function viewPharmacies() {
+  $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.id, pharmacies.name, pharmacies.phoneNumber, pharmacies.location, counties.name FROM pharmacies INNER JOIN counties ON counties.id = pharmacies.county ORDER BY counties.name ASC;");
+  $data = array();
+  while($row = mysqli_fetch_array($qry)) {
+    $data[] = $row;
+  }
+  $data = array("pharmacies" => $data);
+  print json_encode($data);
+}
+
+function viewPharmacy() {
+  $pharm = $_POST['pharmacy'];
+    $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.id, pharmacies.name, pharmacies.phoneNumber, pharmacies.location, counties.name FROM pharmacies INNER JOIN counties ON counties.id = pharmacies.county WHERE pharmacies.id = '$pharm';");
+    $data = array("pharmacy" => mysqli_fetch_array($qry));
+    print json_encode($data);
+}
+
+function pharmMedics($id) {
+  $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.name as pharmacy, medicine.name AS medicine FROM pharmacies INNER JOIN pharmacyMedicine ON pharmacyMedicine.pharmacy = pharmacies.id INNER JOIN medicine ON pharmacyMedicine.medicine = medicine.id WHERE pharmacies.id = '$id' ORDER BY medicine.name ASC;");
+  $data = array();
+  while($row = mysqli_fetch_array($qry)) {
+    $data[] = $row;
+  }
+  $data = array("pharmMedics" => $data);
+  print json_encode($data);
 }
 
 ?>

@@ -4,14 +4,6 @@ if (empty($_SESSION['docid'])) {header("location:../");
 } else {
 	include "../src/php/config.php";
 
-	// fetch the counties
-	$qry      = mysqli_query(Config::dbConnect(), "SELECT * FROM counties ORDER BY name ASC;");
-	$counties = '<option value="" disabled selected >-county-</option>';
-	while ($county = mysqli_fetch_array($qry)) {
-		$id       = $county['id'];
-		$name     = $county['name'];
-		$counties = $counties."<option value='$id'>$name</option>";
-	}
 }
 
 ?>
@@ -35,59 +27,45 @@ if (empty($_SESSION['docid'])) {header("location:../");
 
 <nav class="white z-depth-1">
 	<div class="wrapper ">
-		<a href="#" title="medicare" class="brand-logo right">Medicare | Admin</a>
+		<a href="#" title="medicare" class="brand-logo right">Medicare | Doc</a>
 	</div>
 </nav>
 
-<div class="main-body row">
-	<div class="col m3 l3 grey lighten-3">
+<div class="main-body row left-align">
+	<div class="col s12 m3 l3 grey lighten-3">
 		<div class="section">
-			<a href="#add-hospital"><h4>Add Hospital</h4></a>
+			<a href="#my-patients"><h4>My Patients</h4></a>
+			<a href="#my-appointments"><h4>My Appointments</h4></a>
+			<a href="#my-prescriptions"><h4>My Prescription</h4></a>
 		</div>
 	</div>
 
 
-	<div class="col m9 l9">
-		<div class="container" id="add-hospital">
-		<form >
-			<ul id="add-hospital-form">
-				<li style="opacity: 0"><h3>Add Hospital</h3></li>
-				<div class="row">
-					<li style="opacity:0">
-						<div class="input-field col m10 l10 offset-m1 offset-l1">
-							<input type="text" name="hospitalName" id="hospitalName" placeholder="Hospital Name" required  autofocus/>
-						</div>
-					</li>
-
-					<li style="opacity:0">
-						<div class="input-field col m10 l10 offset-m1 offset-l1">
-							<input type="text" name="hospitalLocation" id="hospitalLocation" placeholder="Location"  required />
-						</div>
-					</li>
-
-					<li style="opacity: 0">
-						<div class="input-field col m10 l10 offset-m1 offset-l1">
-							<select name="county" id="county" required>
-<?php
-print$counties;
-?>
-							</select>
-						</div>
-					</li>
-
-					<li style="opacity:0">
-					<button type="submit" id="addHospitalBtn" class="btn waves-effect waves-light right offset-m1 offset-l1">Add</button>
-					</li>
-					<br />.
-					<div class="progress progress1">
-						<div class="indeterminate"></div>
-					</div>
-				</div>
+	<div class="col s12 m9 l9">
+		<div class="container" id="my-patients">
+			<ul id="my-patients-table">
+				<li style="opacity:0"><h3>My Patients</li>
+					<li style="opacity:0"></li>
 			</ul>
-		</form>
+		</div>
+
+
+
+		<div class="container" id="my-appointments">
+			<ul id="my-appointments-table">
+				<li style="opacity:0"><h3>My Appointments</h3></li>
+				<li style="opacity:0"></li>
+			</ul>
+		</div>
+
+		<div class="container" id="my-prescriptions">
+			<ul id="my-prescriptions-table">
+				<li style="opacity:0"><h3>My Prescriptions</h3></li>
+				<li style="opacity:0"></li>
+			</ul>
 		</div>
 	</div>
 </div>
-<script src="../src/js/admin.js"></script>
+<script src="../src/js/doc.js"></script>
 </body>
 </html>

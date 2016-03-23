@@ -12,6 +12,17 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 		$name     = $county['name'];
 		$counties = $counties."<option value='$id'>$name</option>";
 	}
+
+	$qry = mysqli_query(Config::dbConnect(), "SELECT * FROM doctors ORDER BY name ASC;");
+	$data = "<table class='bordered striped responsive'><thead><tr><th>Uname</th><th>Name</th><th>Other Details</th></tr></thead><tbody>";
+
+	while($row = mysqli_fetch_array($qry)) {
+		$uname = $row['username'];
+		$name = $row['name'];
+		$otherDetails = $row['otherDetails'];
+		$data = $data . "<tr><td>$uname</td><td>$name</td><td>$otherDetails</td></tr>";
+	}
+	$data = $data . "</tbody></table>";
 }
 
 ?>
@@ -151,6 +162,9 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 			</div>
 			<ul id="doc-list">
 				<li style="opacity:0"><h3>Doctors</h3></li>
+				<li style="opacity :1">
+					<?php print $data; ?>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -2,31 +2,22 @@
 <button id="test">btn</button>
 <script>
 $("#test").on('click', function() {
-  var data = {req : 'addPatient', uname : 'abednego', pass : 'pass', email : 'abed@rapando.co.ke'};
+  var data = {req : 'viewDocByDisease', disease : 'Malaria'};
   $.ajax({
     dataType : 'text',
     data : data,
     type : 'post',
     url :'requests.php',
     success : function(res) {
-      alert(res);
+      $("div").html(res);
     },
     error : function() {
       alert("error");
     }
   });
 
-  // var data = {req : 'patientLogin', uname : 'samson', pass : 'pass'};
-  // $.ajax({
-  //   dataType : 'text',
-  //   data : data,
-  //   type : 'post',
-  //   url : 'requests.php',
-  //   success :function(res) {
-  //     alert(res);
-  //   }, error : function() {
-  //     alert("error");
-  //   }
-  // })
+
 })
 </script>
+<br /><br />
+<div></div>

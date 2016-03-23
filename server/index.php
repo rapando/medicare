@@ -52,23 +52,23 @@ while($row = mysqli_fetch_array($qry)) {
 <ul class="slides">
 	<li>
 		<img src="files/medical-care.jpg" />
-		<div class="caption left-align">
-		<h3 >This is the tagline</h3>
-		<h5 class="light grey-text text-lighten-3">Here's the logo</h5>
+		<div class="caption left-align black-text">
+		<h3 style="text-align:right !important">Give Medical Attention</h3>
+		<h5 style="text-align:right !important"  class="dark-text">Meet your patients</h5>
 		</div>
 	</li>
 	<li>
 		<img src="files/Medical-Symbol-Care-for-Children-and-Adults.jpg" alt="" />
 		<div class="caption left-align">
-		<h3 class="dark-text" >This is the tagline</h3>
-		<h5 class="light grey-text text-lighten-3">Here's the logo</h5>
+		<h3 class="dark-text" style="color:black !important">Prescribe</h3>
+		<h5 class="center-align" style="color:black !important">Quicken Recovery</h5>
 		</div>
 	</li>
 	<li>
 		<img src="files/shutterstock_102414841.jpg" alt="" />
 		<div class="caption left-align">
-		<h3 ca>This is the tagline</h3>
-		<h5 class="light grey-text text-lighten-3">Here's the logo</h5>
+		<h3 class="dark-text" style="color:black !important">Monitor</h3>
+		<h5 class="center-align" style="color:black !important">Never let them miss a dosage</h5>
 		</div>
 	</li>
 </ul>
