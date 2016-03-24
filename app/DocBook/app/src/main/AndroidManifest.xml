@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.abedx.docbook" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".DoctorCatergoriesFragment"
+            android:label="@string/registeractivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.Register"
+            android:label="@string/title_activity_doctors_panel"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.PatientLogin"
+            android:label="@string/title_activity_view_hospital"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.abedxh.docbook.fragments.Register" />
+        </activity>
+        <activity
+            android:name=".CountyHospital"
+            android:label="@string/title_activity_county_hospital"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ViewCounties"
+            android:label="@string/title_activity_doctor_catergories"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".DoctorsPanel"
+            android:label="@string/title_activity_doctor_catergories"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.Diabetes"
+            android:label="@string/title_activity_diabetes"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.FoodPoisoning"
+            android:label="@string/title_activity_food_poisoning"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.Malaria"
+            android:label="@string/title_activity_malaria"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.Respiratory"
+            android:label="@string/title_activity_respiratory"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.example.abedxh.docbook.fragments.Stroke_Heart_Disease"
+            android:label="@string/title_activity_stroke__heart__disease"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".Pharmacies"
+            android:label="@string/title_activity_pharmacies"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".BookAppointment"
+            android:label="@string/title_activity_book_appointment"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+    </application>
+
+</manifest>

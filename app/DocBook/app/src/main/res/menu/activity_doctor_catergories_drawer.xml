@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/Diabetes" android:icon="@android:drawable/ic_menu_camera"
+            android:title="Diabetes" />
+        <item android:id="@+id/FoodPoisoning" android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Food Poisoning" />
+        <item android:id="@+id/Malaria" android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="Malaria" />
+        <item android:id="@+id/Respiratory" android:icon="@android:drawable/ic_menu_manage"
+            android:title="Respiratory" />
+        <item android:id="@+id/Stroke_Heart_Diseases" android:icon="@android:drawable/ic_menu_manage"
+            android:title="Stroke/Heart Diseases" />
+
+    </group>
+    <item android:title="Pharmacy">
+        <menu>
+            <item android:id="@+id/Pharmacies" android:icon="@android:drawable/ic_menu_share"
+                android:title="Pharmacies" />
+        </menu>
+    </item>
+
+    <item android:title="Register and Login">
+        <menu>
+            <item android:id="@+id/Login" android:icon="@android:drawable/ic_menu_share"
+                android:title="Login" />
+            <item android:id="@+id/Register" android:icon="@android:drawable/ic_menu_send"
+                android:title="Register" />
+        </menu>
+    </item>
+
+</menu>
