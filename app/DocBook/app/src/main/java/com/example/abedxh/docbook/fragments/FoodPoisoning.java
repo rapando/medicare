@@ -2,11 +2,13 @@ package com.example.abedxh.docbook.fragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -17,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.abedx.docbook.BookAppointment;
 import com.example.abedx.docbook.CustomDoctor;
 import com.example.abedx.docbook.GetySetterDoctor;
 import com.example.abedx.docbook.MessageClass;
@@ -51,22 +54,34 @@ public class FoodPoisoning extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_food_poisoning, container, false);
         doctorListView = (ListView) rootView.findViewById(R.id.listViewDiabetes);
+        doctorListView = (ListView) rootView.findViewById(R.id.listViewDiabetes);
+        doctorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sel=parent.getItemAtPosition(position).toString();
+                MessageClass.message(getActivity(),"Selected is"+sel);
+                startActivity(new Intent(getActivity(), BookAppointment.class));
+            }
+        });
         getDoctor();
         return rootView;
     }
 
     private void getDoctor() {
+        final ProgressDialog progressDialog1 = ProgressDialog.show(getActivity(), "Getting Doctors For you  ....", "Please wait ...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("FOOD POISONING", response);
                 showDoctors();
+                progressDialog1.dismiss();
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         //Log.d("StringReqErro",volleyError.toString());
+                        progressDialog1.dismiss();
                     }
                 }) {
             @Override

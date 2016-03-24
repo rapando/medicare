@@ -58,8 +58,9 @@ public class Diabetes extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String sel=parent.getItemAtPosition(position).toString();
-                MessageClass.message(getActivity(),"Selected is"+sel);
+                MessageClass.message(getActivity(), "Selected is" + sel);
                 startActivity(new Intent(getActivity(), BookAppointment.class));
+
             }
         });
         getDoctor();
@@ -67,17 +68,20 @@ public class Diabetes extends Fragment {
     }
 
     private void getDoctor() {
+        final ProgressDialog progressDialog1 = ProgressDialog.show(getActivity(), "Getting Doctors For you ....", "Please wait ...", false, false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("DIABETES", response);
                 showDoctors();
+                progressDialog1.dismiss();
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                     //Log.d("StringReqErro",volleyError.toString());
+                        progressDialog1.dismiss();
                     }
                 }) {
             @Override
@@ -93,7 +97,7 @@ public class Diabetes extends Fragment {
     }
 
     private void showDoctors() {
-        final ProgressDialog progressDialog1 = ProgressDialog.show(getActivity(), "Getting Doctors List ....", "Please wait ...", false, false);
+        final ProgressDialog progressDialog1 = ProgressDialog.show(getActivity(), "Getting Doctors For you  ....", "Please wait ...", false, false);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {

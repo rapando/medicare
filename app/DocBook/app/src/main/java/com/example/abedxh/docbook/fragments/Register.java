@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.abedx.docbook.DoctorCatergoriesFragment;
 import com.example.abedx.docbook.DoctorsPanel;
 import com.example.abedx.docbook.MessageClass;
 import com.example.abedx.docbook.R;
@@ -158,6 +159,7 @@ public class Register extends Fragment {
                     {
                         MessageClass.message(getActivity(), "Registered");
                         Log.d("RESULT", s);
+                        startActivity(new Intent(getActivity(), DoctorCatergoriesFragment.class));
                     }
                     else if(s.trim().equals("0"))
                     {
