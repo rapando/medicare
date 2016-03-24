@@ -13,6 +13,7 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 		$counties = $counties."<option value='$id'>$name</option>";
 	}
 
+// fetch the doctors
 	$qry = mysqli_query(Config::dbConnect(), "SELECT * FROM doctors ORDER BY name ASC;");
 	$data = "<table class='bordered striped responsive'><thead><tr><th>Uname</th><th>Name</th><th>Other Details</th></tr></thead><tbody>";
 
@@ -23,6 +24,18 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 		$data = $data . "<tr><td>$uname</td><td>$name</td><td>$otherDetails</td></tr>";
 	}
 	$data = $data . "</tbody></table>";
+
+//fetch the patients
+$qry = mysqli_query(Config::dbConnect(), "SELECT * FROM patients ORDER BY username ASC;");
+$patients = "<table class='bordered striped responsive'><thead><tr><th>Uname</th><th>email</th></tr></thead><tbody>";
+
+while($row = mysqli_fetch_array($qry)) {
+	$uname = $row['username'];
+	$email = $row['email'];
+
+	$patients = $patients . "<tr><td>$uname</td><td>$email</td></tr>";
+}
+$patients = $patients . "</tbody></table>";
 }
 
 ?>
@@ -45,27 +58,23 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 <body>
 
 <nav class="white z-depth-1">
-	<div class="wrapper ">
+	<div class="nav-wrapper ">
 		<a href="#" title="medicare" class="brand-logo right">Medicare | Admin</a>
+		<ul >
+			<li><a href="#add-hospital" style="color:black !important">+ Hospital</a></li>
+			<li><a href="#add-pharmacy" style="color:black !important">+ Pharmacy</a></li>
+			<li><a href="#viewDocs" style="color:black !important">View Doctors</a></li>
+			<li><a href="#viewPats" style="color:black !important">View Patients</a></li>
+
+    </ul>
 	</div>
 </nav>
 
+
+
 <div class="main-body row" >
-	<div class="col m3 l3 grey lighten-3">
-		<div class="section">
-			<a href="#add-hospital"><h4>Add Hospital</h4></a>
-			<a href="#add-pharmacy"><h4>Add Pharmacy</h4></a>
-		</div>
-		<div class="divider"></div>
-		<div class="section">
-			<a href="#viewDocs"><h4>View Doctors</h4></a>
-			<a href="#viewPats"><h4>View Patients</h4></a>
-		</div>
 
-	</div>
-
-
-	<div class="col m9 l9">
+	<div class="col s12 m10 l10 offset-m1 offset-l1">
 		<div class="container" id="add-hospital">
 		<form >
 			<ul id="add-hospital-form">
@@ -162,11 +171,26 @@ if (empty($_SESSION['adminId'])) {header("location:login.php");
 			</div>
 			<ul id="doc-list">
 				<li style="opacity:0"><h3>Doctors</h3></li>
-				<li style="opacity :1">
+				<li style="opacity :0">
 					<?php print $data; ?>
 				</li>
 			</ul>
 		</div>
+
+		<div class="divider"></div>
+		<div class="container" id="viewPats">
+			<div class="progress progress3">
+				<div class="indeterminate"></div>
+			</div>
+			<ul id="pat-list">
+				<li style="opacity:0"><h3>Patients</h3></li>
+				<li style="opacity :0">
+					<?php print $patients; ?>
+				</li>
+			</ul>
+		</div>
+
+
 	</div>
 </div>
 

@@ -2,12 +2,12 @@
 <button id="test">btn</button>
 <script>
 $("#test").on('click', function() {
-  var data = {req : 'viewDocByDisease', disease : 'Malaria'};
+  var data = {req : 'patientLogin', uname : 'ruth', pass : 'ruth'};
   $.ajax({
     dataType : 'text',
     data : data,
     type : 'post',
-    url :'requests.php',
+    url :'http://mc.rapandi.co.ke/src/php/requests.php',
     success : function(res) {
       $("div").html(res);
     },

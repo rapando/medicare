@@ -105,4 +105,12 @@ jQuery(document).ready(function($) {
 		Materialize.showStaggeredList('#doc-list');
 	});
 
+	$("a[href='#viewPats']").on('click', function(e) {
+		e.preventDefault();
+		$('html, body').animate({
+			scrollTop : $("#viewPats").offset().top
+		}, 500);
+		Materialize.showStaggeredList("#pat-list");
+	});
+
 });

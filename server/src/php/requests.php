@@ -1,6 +1,7 @@
 <?php
 if(isset($_POST['req'])) {
   include "config.php";
+  header('Content-Type : application/json');
 
   switch($_POST['req']) {
     // ad a doctor
@@ -54,7 +55,15 @@ if(isset($_POST['req'])) {
     break;
 
     case 'pharmMedics':
-      pharmMedics($_POST['pharmacyId']);
+      pharmMedics($_POST['pharmacyName']);
+    break;
+
+    case 'viewDisease':
+    viewDisease();
+    break;
+
+    case 'addPrescription':
+    addPrescription();
     break;
 
 
@@ -67,13 +76,14 @@ function docLogin() {
   $qryUname = mysqli_query(Config::dbConnect(), "SELECT id, username FROM doctors WHERE username = '$username';");
   $no       = mysqli_num_rows($qryUname);
   if ($no > 0) {
-    $qryPass    = mysqli_query(Config::dbConnect(), "SELECT id, pass, salt FROM doctors WHERE username = '$username';");
-    $stored     = mysqli_fetch_array($qryPass);
+    $qryPass    = mysqli_query(Config::dbConnect(), "SELECT id, pass, salt, specialization FROM doctors WHERE username = '$username';");
+    $stored     = mysqli_fetch_assoc($qryPass);
     $storedPass = $stored['pass'];
     $storedSalt = $stored['salt'];
     if (Config::passHasher($pass, $storedSalt) == $storedPass) {
       session_start();
       $_SESSION['docid'] = $stored['id'];
+      $_SESSION['specialization'] = $stored['specialization'];
       print json_encode(1);
     } else {
       print json_encode(0);
@@ -126,7 +136,7 @@ function patientLogin() {
   $no = mysqli_num_rows($qryUname);
   if($no > 0) {
     $qryPass = mysqli_query(Config::dbConnect(), "SELECT pass, salt FROM patients WHERE username = '$uname';");
-    $stored     = mysqli_fetch_array($qryPass);
+    $stored     = mysqli_fetch_assoc($qryPass);
     $storedPass = $stored['pass'];
     $storedSalt = $stored['salt'];
     if (Config::passHasher($pass, $storedSalt) == $storedPass) {
@@ -151,7 +161,7 @@ function bookAppointment() {
 function viewDoctors() {
   $qry = mysqli_query(Config::dbConnect(), "SELECT doctors.id, doctors.name as doctorName, doctors.otherDetails, diseases.name as disease, hospitals.name as hospital FROM doctors INNER JOIN hospitals ON hospitals.id = doctors.hospital INNER JOIN diseases ON doctors.specialization = diseases.id  ORDER BY doctors.name ASC;");
   $data = array();
-  while($row = mysqli_fetch_array($qry)) {
+  while($row = mysqli_fetch_assoc($qry)) {
     $data[] = $row;
   }
   $data = array("disease" => $data);
@@ -162,14 +172,14 @@ function viewDoctor() {
   $docId = $_POST['docId'];
 
   $qry = mysqli_query(Config::dbConnect(), "SELECT doctors.id, doctors.name as doctorName, doctors.otherDetails, diseases.name as disease, hospitals.name as hospital FROM doctors INNER JOIN hospitals ON hospitals.id = doctors.hospital INNER JOIN diseases ON doctors.specialization = diseases.id WHERE doctors.id = '$docId';");
-  $data = array("doctor" => mysqli_fetch_array($qry));
+  $data = array("doctor" => mysqli_fetch_assoc($qry));
   print json_encode($data);
 }
 
 function viewDocByDisease($disease) {
   $qry = mysqli_query(Config::dbConnect(), "SELECT doctors.id, doctors.name as doctorName, doctors.otherDetails, diseases.name as disease, hospitals.name as hospital FROM doctors INNER JOIN hospitals ON hospitals.id = doctors.hospital INNER JOIN diseases ON doctors.specialization = diseases.id WHERE diseases.name = '$disease';");
   $data = array();
-  while($row = mysqli_fetch_array($qry)) {
+  while($row = mysqli_fetch_assoc($qry)) {
     $data[] = $row;
   }
   $data = array("disease" => $data);
@@ -180,7 +190,7 @@ function viewDocByDisease($disease) {
 function viewHospitals() {
   $qry = mysqli_query(Config::dbConnect(), "SELECT hospitals.id, hospitals.name, hospitals.location, counties.name FROM hospitals LEFT JOIN counties ON counties.id = hospitals.county ORDER BY counties.name ASC;");
   $data = array();
-  while($row = mysqli_fetch_array($qry)) {
+  while($row = mysqli_fetch_assoc($qry)) {
     $data[] = $row;
   }
   $data = array("hospitals" => $data);
@@ -191,14 +201,14 @@ function viewHospital() {
   $hospitalId = $_POST['hospitalId'];
 
   $qry = mysqli_query(Config::dbConnect(), "SELECT hospitals.id, hospitals.name, hospitals.location, counties.name FROM hospitals LEFT JOIN counties ON counties.id = hospitals.county WHERE hospitals.id = '$hospitalId';");
-  $data = array("hospital" => mysqli_fetch_array($qry));
+  $data = array("hospital" => mysqli_fetch_assoc($qry));
   print json_encode($data);
 }
 
 function viewPharmacies() {
-  $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.id, pharmacies.name, pharmacies.phoneNumber, pharmacies.location, counties.name FROM pharmacies INNER JOIN counties ON counties.id = pharmacies.county ORDER BY counties.name ASC;");
+  $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.id, pharmacies.name, pharmacies.phoneNumber, pharmacies.location, counties.name as county FROM pharmacies INNER JOIN counties ON counties.id = pharmacies.county ORDER BY counties.name ASC;");
   $data = array();
-  while($row = mysqli_fetch_array($qry)) {
+  while($row = mysqli_fetch_assoc($qry)) {
     $data[] = $row;
   }
   $data = array("pharmacies" => $data);
@@ -208,18 +218,36 @@ function viewPharmacies() {
 function viewPharmacy() {
   $pharm = $_POST['pharmacy'];
     $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.id, pharmacies.name, pharmacies.phoneNumber, pharmacies.location, counties.name FROM pharmacies INNER JOIN counties ON counties.id = pharmacies.county WHERE pharmacies.id = '$pharm';");
-    $data = array("pharmacy" => mysqli_fetch_array($qry));
+    $data = array("pharmacy" => mysqli_fetch_assoc($qry));
     print json_encode($data);
 }
 
-function pharmMedics($id) {
-  $qry = mysqli_query(Config::dbConnect(), "SELECT pharmacies.name as pharmacy, medicine.name AS medicine FROM pharmacies INNER JOIN pharmacyMedicine ON pharmacyMedicine.pharmacy = pharmacies.id INNER JOIN medicine ON pharmacyMedicine.medicine = medicine.id WHERE pharmacies.id = '$id' ORDER BY medicine.name ASC;");
+function pharmMedics($name) {
+  $qry = mysqli_query(Config::dbConnect(), "SELECT  medicine.name AS medicine FROM pharmacies INNER JOIN pharmacyMedicine ON pharmacyMedicine.pharmacy = pharmacies.id INNER JOIN medicine ON pharmacyMedicine.medicine = medicine.id WHERE pharmacies.name = '$name' ORDER BY medicine.name ASC;");
+
   $data = array();
-  while($row = mysqli_fetch_array($qry)) {
+  while($row = mysqli_fetch_assoc($qry)) {
     $data[] = $row;
   }
   $data = array("pharmMedics" => $data);
   print json_encode($data);
+}
+
+function viewDisease() {
+  $disease = $_SESSION['specialization'];
+  $qry = mysqli_query(Config::dbConnect(), "SELECT diseases.name FROM diseases WHERE id = '$disease';");
+  print json_encode(mysqli_fetch_assoc($qry)['name']);
+}
+
+function addPrescription() {
+  $doctor = $_SESSION['docid'];
+  $patient = $_POST['patient'];
+  $prescription = $_POST['prescription'];
+  $dosage = $_POST['dosage'];
+
+  $qry = mysqli_query(Config::dbConnect(), "INSERT INTO patientPrescription (id, patient, doctor, prescription, dosage) VALUES ('', '$patient', '$doctor', '$prescription', '$dosage')");
+  if($qry) print json_encode(1);
+  else print json_encode(0);
 }
 
 ?>

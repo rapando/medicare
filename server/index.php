@@ -84,7 +84,7 @@ while($row = mysqli_fetch_array($qry)) {
 	<div class="row">
 	<li style="opacity: 0" >
 		<div class="input-field col s12 m5 l5 offset-m1 offset-l1">
-			<input type="text" name="uname" id="uname" placeholder="username"  required autofocus />
+			<input type="text" name="uname" id="uname" placeholder="username"  required  />
 		</div>
 	</li>
 	<li style="opacity:0">
